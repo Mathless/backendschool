@@ -18,9 +18,7 @@ def test_couriers_201(client, app, courier_type, working_hours):
             ]
         }
         url = '/couriers'
-        print(data)
         response = client.post(url, data=json.dumps(data), content_type='application/json', )
-        print(response.get_json(), "JSON")
 
         assert response.status_code == 201
 
@@ -40,8 +38,6 @@ def test_couriers_400(client, app, courier_type, working_hours):
             ]
         }
         url = '/couriers'
-        print(data)
         response = client.post(url, data=json.dumps(data), content_type='application/json', )
-        print(response.get_json(), "JSON")
 
         assert response.status_code == 400

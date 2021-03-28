@@ -26,9 +26,7 @@ def test_orders_post_201(client, app):
             ]
         }
         url = '/orders'
-        print(data)
         response = client.post(url, data=json.dumps(data), content_type='application/json', )
-        print(response.get_json(), "JSON")
 
         assert response.status_code == 201
         assert json.dumps(response.get_json()) == json.dumps({
@@ -70,8 +68,6 @@ def test_orders_post_400(client, app):
             ]
         }
         url = '/orders'
-        print(data)
         response = client.post(url, data=json.dumps(data), content_type='application/json', )
-        print(response.get_json(), "JSON")
 
         assert response.status_code == 400

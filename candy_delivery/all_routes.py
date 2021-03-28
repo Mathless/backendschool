@@ -17,7 +17,6 @@ def couriers(courier_id=None):
     if request.method == 'POST':
         """Загружает список курьеров в систему"""
         couriers_json = request.json
-        print(couriers_json)
         bad_couriers = check_couriers(couriers_json)
         if len(bad_couriers["validation_error"]["couriers"]) != 0:
             return bad_couriers, 400
@@ -32,7 +31,6 @@ def couriers(courier_id=None):
     if request.method == 'PATCH':
         """Изменяет информацию о курьере"""
         data_to_change = request.json
-        print(data_to_change)
         if check_courier_to_change(data_to_change):
             return edit_courier(courier_id, data_to_change), 201
         else:
@@ -43,7 +41,6 @@ def couriers(courier_id=None):
 def orders():
     """Позволяет загрузить заказы"""
     orders_json = request.json
-    print(orders_json)
     bad_orders = check_orders(orders_json)
     if len(bad_orders["validation_error"]["orders"]) != 0:  # (курьеров с незаполненными полями ноль)
         return bad_orders, 400

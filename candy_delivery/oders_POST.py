@@ -48,7 +48,6 @@ def check_orders(orders_json):
         "additionalProperties": False
     }
     bad_orders = {"validation_error": {"orders": []}}
-    print(orders_json)
     for order in orders_json["data"]:
         try:
             validate(instance=order, schema=order_schema)
@@ -76,8 +75,8 @@ def add_orders(orders_json):
                 orders_values
             )
             good_orders["orders"].append({"id": order["order_id"]})
-        except Exception as e:
-            print(e)
+        except ValidationError:
+            pass
         orders_values = []
     db.commit()
     return good_orders

@@ -1,7 +1,7 @@
 from sqlite3 import Error
 
 import dateutil.parser
-from jsonschema import validate
+from jsonschema import validate, ValidationError
 
 from candy_delivery.db import get_db
 
@@ -30,12 +30,11 @@ def check_order_complete(order_complete):
     order_id = order_complete["order_id"]
     try:
         order = list(cursor.execute("SELECT * FROM orders WHERE order_id = ?", (order_id,)))[0]
-        print(order)
         if order['status'] == "incomplete" or order['courier_id'] != courier_id:
             cursor.close()
             return False
         validate(instance=order_complete, schema=order_complete_schema)
-    except Error:
+    except (ValidationError, IndexError, Error):
         cursor.close()
         return False
     cursor.close()
@@ -75,7 +74,6 @@ def complete_order(order_complete):
             "UPDATE couriers SET current_orders = ?, completed_orders = ?, orders_weight = ? WHERE courier_id = ?",
             (current_orders, completed_orders, orders_weight, courier_id)
         )
-    print(current_orders, completed_orders)
     db.commit()
     return {"order_id": order_id}
 

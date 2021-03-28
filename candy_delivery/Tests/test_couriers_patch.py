@@ -15,9 +15,7 @@ def test_couriers_patch_201(client, app, courier_type, regions, working_hours):
                 working_hours
         }
         url = '/couriers/1'
-        print(data)
         response = client.patch(url, data=json.dumps(data), content_type='application/json', )
-        print(response.get_json(), "JSON")
         assert response.status_code == 201
         assert json.dumps(response.get_json()) == json.dumps({
             "courier_id": 1,
@@ -39,7 +37,5 @@ def test_couriers_patch_400(client, app, courier_type, regions, working_hours):
                 working_hours
         }
         url = '/couriers/1'
-        print(data)
         response = client.patch(url, data=json.dumps(data), content_type='application/json', )
-        print(response.get_json(), "JSON")
         assert response.status_code == 400

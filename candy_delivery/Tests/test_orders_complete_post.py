@@ -13,9 +13,7 @@ def test_couriers_assign_201(client, app, courier_id, order_id):
             "complete_time": "2021-03-27T17:59:23.416092Z"
         }
         url = '/orders/complete'
-        print(data)
         response = client.post(url, data=json.dumps(data), content_type='application/json', )
-        print(response.get_json(), "JSON")
 
         assert response.status_code == 201
         assert json.dumps(response.get_json()) == json.dumps({'order_id': order_id})
@@ -31,8 +29,6 @@ def test_couriers_assign_400(client, app, courier_id, order_id):
             "complete_time": "2021-03-27T17:59:23.416092Z"
         }
         url = '/orders/complete'
-        print(data)
         response = client.post(url, data=json.dumps(data), content_type='application/json', )
-        print(response.get_json(), "JSON")
 
         assert response.status_code == 400

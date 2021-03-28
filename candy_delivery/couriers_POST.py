@@ -56,14 +56,11 @@ def check_couriers(couriers_json):
         "additionalProperties": False
     }
     bad_couriers = {"validation_error": {"couriers": []}}
-    print(couriers_json)
     for courier in couriers_json["data"]:
-        print(courier)
         try:
             validate(instance=courier, schema=courier_schema)
         except ValidationError:
             bad_couriers["validation_error"]["couriers"].append({"id": courier["courier_id"]})
-    print(bad_couriers)
     return bad_couriers
 
 
@@ -79,7 +76,6 @@ def add_couriers(couriers_json):
                 couriers_values.append("#".join([str(x) for x in courier[key]]))
             else:
                 couriers_values.append(courier[key])
-        print(couriers_values)
         try:
             db.execute(
                 "INSERT INTO couriers (courier_id, courier_type, regions, working_hours) VALUES (?, ?, ?, ?)",

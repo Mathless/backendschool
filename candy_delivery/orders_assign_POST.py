@@ -1,6 +1,7 @@
 import datetime
+from sqlite3 import Error
 
-from jsonschema import validate
+from jsonschema import validate, ValidationError
 
 from candy_delivery.db import get_db
 
@@ -26,8 +27,7 @@ def check_courier_id_json(courier_id_json):
         if data == 0:
             return False
         validate(instance=courier_id_json, schema=courier_id_schema)
-    except Exception as e:
-        print(e)
+    except (ValidationError, IndexError, Error):
         return False
     return True
 
