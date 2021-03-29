@@ -5,7 +5,7 @@ from candy_delivery.orders_assign_POST import check_dates_for_intersection
 
 
 def check_courier_to_change(courier_to_change):
-    """Проверяет полученный json"""
+    """Checks the received json"""
     courier_schema = {
         "type": "object",
         "properties": {
@@ -44,8 +44,8 @@ def check_courier_to_change(courier_to_change):
 
 
 def edit_courier(courier_id, data_to_change):
-    """Изменяет информацию о курьре. Если у курьера были текущие заказы, то снимает заказы, которые уже не сможет
-    развести """
+    """Changes the information about the courier. If the courier had current orders, it removes orders that it can
+no longer fulfill"""
     db = get_db()
     couriers_values = []
     for key in data_to_change.keys():
@@ -69,7 +69,7 @@ def edit_courier(courier_id, data_to_change):
                 "UPDATE couriers SET working_hours = ? WHERE courier_id = ?",
                 ("#".join([str(x) for x in data_to_change["working_hours"]]), courier_id)
             )
-    # Пройтись по заказам и узнать какие уже нельзя развести
+    # Go through the orders and find out which ones can no longer be separated
     cursor = db.cursor()
     courier = list(cursor.execute("SELECT * FROM couriers WHERE courier_id = ?", (courier_id,)))[0]
     if courier["current_orders"] == "":
@@ -86,7 +86,7 @@ def edit_courier(courier_id, data_to_change):
     current_weight = courier['orders_weight']
     max_weight = type_weight[courier["courier_type"]]
     current_orders = courier['current_orders'].strip("#").split("#")
-    # Сначала удаляем те, которые не подходят по времени или региону
+    # First, we delete the ones that do not fit the time or region
     for order in cursor.execute(
             "SELECT * FROM orders WHERE status LIKE 'taken' AND courier_id LIKE ?  ORDER BY weight DESC",
             (courier_id,)):
@@ -100,7 +100,7 @@ def edit_courier(courier_id, data_to_change):
                 "UPDATE orders SET status='incomplete', courier_id=-1, time = '' WHERE order_id = ?",
                 (order['order_id'],)
             )
-    # Затем удаляем те, которые не подходят по весу
+    # Then we remove the ones that do not fit the weight
     for order in cursor.execute(
             "SELECT * FROM orders WHERE status LIKE 'taken' AND courier_id LIKE ?  ORDER BY weight DESC",
             (courier_id,)):

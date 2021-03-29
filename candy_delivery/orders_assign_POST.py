@@ -7,7 +7,7 @@ from candy_delivery.db import get_db
 
 
 def check_courier_id_json(courier_id_json):
-    """Проверяет полученный json"""
+    """Checks the received json"""
     courier_id_schema = {
         "type": "object",
         "properties": {
@@ -33,17 +33,17 @@ def check_courier_id_json(courier_id_json):
 
 
 def orders_json_to_string(json_orders):
-    """Преобразует json заказов в строку, где разделитель '#'"""
+    """Converts json orders to a string where the separator is '#'"""
     orders_s = ""
     for d in json_orders['orders']:
         orders_s += str(d['id']) + "#"
     return orders_s.strip("#")
 
 
+# noinspection DuplicatedCode,DuplicatedCode
 def check_dates_for_intersection(list_date_1, list_date_2):
-    """Проверяет две даты на пересечение"""
+    """Checks two dates for an intersection"""
     for date_1 in list_date_1:
-        # noinspection DuplicatedCode,DuplicatedCode
         for date_2 in list_date_2:
             start1, end1 = date_1.split("-")
             start1 = start1.split(':')
@@ -61,8 +61,8 @@ def check_dates_for_intersection(list_date_1, list_date_2):
 
 
 def get_orders(courier_id):
-    """Назначает курьеру максимально возможное количество заказов. Для этого проходится по доступным заказам в
-    порядке увеличения веса. Если хотя бы один заказ был назначен, то записывается время выдачи assign_time"""
+    """Assigns the courier the maximum possible number of orders. To do this, go through the available orders in
+order of increasing weight. If at least one order has been assigned, the assign_time issue time is recorded"""
     type_weight = {"foot": 10, "bike": 15, "car": 50}
     orders_for_response = {"orders": []}
     db = get_db()
@@ -74,7 +74,7 @@ def get_orders(courier_id):
     max_weight = type_weight[courier["courier_type"]]
     current_orders = courier['current_orders']
     for order in cursor.execute("SELECT * FROM orders WHERE status LIKE 'incomplete' ORDER BY weight"):
-        if current_weight + order['weight'] < max_weight and order[  # Проверяет: Может ли наш курьер взять этот заказ?
+        if current_weight + order['weight'] < max_weight and order[
             'region'] in courier_regions and check_dates_for_intersection(working_hours,
                                                                           order['delivery_hours'].strip("#").split(
                                                                               "#")):
@@ -93,7 +93,7 @@ def get_orders(courier_id):
             orders_for_response["orders"].append({"id": int(order_id)})
         if current_orders != "":
             orders_for_response["assign_time"] = courier["assign_time"]
-        return orders_for_response  # ВОЗВРАЩАЕМ, то что УЖЕ было(если не нашли заказов)
+        return orders_for_response
     assign_time = datetime.datetime.utcnow().isoformat("T") + "Z"
     orders_for_response["assign_time"] = assign_time
     for order_id in current_orders.strip("#").split("#"):

@@ -12,10 +12,10 @@ with open(os.path.join(os.path.dirname(__file__), 'data.sql'), 'rb') as f:
 
 @pytest.fixture
 def app():
-    """Создает и настроивает новый экземпляр приложения для каждого теста."""
-    # создает временный файл, чтобы изолировать базу данных для каждого теста
+    """Creates and configures a new instance of the application for each test."""
+    # creates a temporary file to isolate the database for each test
     db_fd, db_path = tempfile.mkstemp()
-    # создает приложение с общей тестовой конфигурацией
+    # creates an application with a shared test configuration
     app = create_app({"TESTING": True, "DATABASE": db_path})
 
     with app.app_context():

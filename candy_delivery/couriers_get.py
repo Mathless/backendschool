@@ -5,8 +5,8 @@ from candy_delivery.db import get_db
 
 
 def get_courier_info(courier_id):
-    """Получает информацию о курьере. Если курьер выполнил хотя бы один заказ, то рассчитывает для него рейтинг и
-    заработок """
+    """Gets information about the courier. If the courier has completed at least one order, it calculates the rating and
+earnings for it"""
     db = get_db()
     cursor = db.cursor()
     try:

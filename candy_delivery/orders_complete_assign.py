@@ -7,8 +7,8 @@ from candy_delivery.db import get_db
 
 
 def check_order_complete(order_complete):
-    """Проверяет json и в случае, если заказ не найден, был назначен на другого курьера или не назначен вовсе,
-    возвращает ошибку HTTP 400 Bad Request."""
+    """Checks json and if the order is not found, was assigned to another courier or not assigned at all,
+    returns the HTTP 400 Bad Request error."""
     order_complete_schema = {
         "type": "object",
         "properties": {
@@ -42,7 +42,7 @@ def check_order_complete(order_complete):
 
 
 def complete_order(order_complete):
-    """Отмечает заказ выполненным."""
+    """Marks the order as completed."""
     courier_id = order_complete["courier_id"]
     order_id = order_complete["order_id"]
     time = order_complete["complete_time"]
@@ -79,7 +79,7 @@ def complete_order(order_complete):
 
 
 def delay(last_time, time):
-    """Расчитывает время в секундах между двумя датами в формате ISO 8601"""
+    """Calculates the time in seconds between two dates in ISO 8601 format"""
     t_time = dateutil.parser.parse(time)
     l_time = dateutil.parser.parse(last_time)
     return abs(t_time - l_time).total_seconds()

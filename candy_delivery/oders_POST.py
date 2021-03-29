@@ -5,7 +5,7 @@ from candy_delivery.db import get_db
 
 
 def check_orders(orders_json):
-    """Проверяет полученный json. Сначала весь, затем каждый заказ по отдельности."""
+    """Checks the received json. First the whole order, then each order individually."""
     orders_schema = {
         "properties": {
             "data": {
@@ -57,7 +57,7 @@ def check_orders(orders_json):
 
 
 def add_orders(orders_json):
-    """Добавляет заказы в БД"""
+    """Adds orders to the database"""
     db = get_db()
     orders_values = []
     good_orders = {"orders": []}

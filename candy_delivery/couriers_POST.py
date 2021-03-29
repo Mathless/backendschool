@@ -7,7 +7,7 @@ from candy_delivery.db import get_db
 
 
 def check_couriers(couriers_json):
-    """Проверяет полученный json. Сначала весь, затем каждого курьера по отдельности."""
+    """Checks the received json. First all of them, then each courier individually."""
     couriers_schema = {
         "properties": {
             "data": {
@@ -65,7 +65,7 @@ def check_couriers(couriers_json):
 
 
 def add_couriers(couriers_json):
-    """Добавляет курьеров в БД"""
+    """Adds couriers to the database"""
     db = get_db()
     couriers_values = []
     good_couriers = {"couriers": []}
