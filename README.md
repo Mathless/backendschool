@@ -25,9 +25,9 @@ $ pytest
 
 # Установка
 
-## В теории, на сервере всё должно быть уже установлено, но, если это не так:
+В теории, на сервере всё должно быть уже установлено, но, если это не так:
 
-### Устанавливаем все эти нужные штучки
+Устанавливаем все эти нужные штучки
 ```console
 $ sudo apt-get update
 $ sudo apt-get upgrade
@@ -43,7 +43,7 @@ $ pip3 install flask
 $ sudo apt install python3-flask
 $ pip3 install backendschool-1.0-py3-none-any.whl
 ```
-### Когда все зависимости установлены, находясь в папке **backendschool**:
+Когда все зависимости установлены, находясь в папке **backendschool**:
 ```console
 $ export FLASK_APP=candy_delivery
 $ flask init-db
