@@ -27,7 +27,7 @@ def check_courier_id_json(courier_id_json):
         if data == 0:
             return False
         validate(instance=courier_id_json, schema=courier_id_schema)
-    except (ValidationError, IndexError, Error):
+    except (ValidationError, IndexError, Error, KeyError, ValueError, TypeError):
         return False
     return True
 

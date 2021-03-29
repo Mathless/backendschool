@@ -34,7 +34,7 @@ def check_order_complete(order_complete):
             cursor.close()
             return False
         validate(instance=order_complete, schema=order_complete_schema)
-    except (ValidationError, IndexError, Error):
+    except (ValidationError, IndexError, Error, KeyError, ValueError, TypeError):
         cursor.close()
         return False
     cursor.close()
