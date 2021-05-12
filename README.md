@@ -51,5 +51,3 @@ jsonschema~=3.2.0
 MarkupSafe~=1.1.0
 python-dateutil~=2.7.3
 ```
-Ответы на любые вопросы в любое время:
-[Telegram](https://t.me/tyomachka)
