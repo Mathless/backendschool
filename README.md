@@ -16,18 +16,8 @@ $ waitress-serve --call 'candy_delivery:create_app'
 ```console
 $ pytest
 ```
-# Чего удалось достичь
-
-* Создан REST API сервис
-* Реализованны 6 обработчиков
-* Есть тесты
-* Использована СУБД Sqlite
-
 # Установка
 
-В теории, на сервере всё должно быть уже установлено, но, если это не так:
-
-Устанавливаем все эти нужные штучки
 ```console
 $ sudo apt-get update
 $ sudo apt-get upgrade
